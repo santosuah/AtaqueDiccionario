@@ -32,10 +32,21 @@ $ python3 fuerzaBruta/fuerzaBruta.py -c comprimido.zip -d diccionario.txt
 Tiempo transcurrido: 13.82808s
 Clave: gato85gomez
 ```
+### Formato archivo de cadenas
+Este se usa como los datos iniciales para generar el diccionario, se trata de un archivo de texto en el cual cada línea contiene una única palabra sin espacios. Ilustramos con el siguiente ejemplo.
+
+```txt
+lupo
+pedro
+72041985
+pepe
+mecano
+ronaldo
+```
 
 ### Ayuda
 
-1. diccionario.py.py
+1. diccionario.py
 
 ```shell
 $ python3 fuerzaBruta/fuerzaBruta.py -h
