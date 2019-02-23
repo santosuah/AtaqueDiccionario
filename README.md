@@ -1,7 +1,7 @@
 ## Ataque por diccionario
-![Alt text](./Diagramas/flujo.png)
+![Alt text](./diagramas/flujo.png)
 
-Existen dos fases de generación, la creación del diccionario a partir de lista de palabras y una longitud máxima de combinación, para porteriormente caomporbar todos las claves del diccionario sobre el archivo comprimido.
+Existen dos fases de generación, la creación del diccionario a partir de lista de palabras y una longitud máxima de combinación, para porteriormente comporbar todos las claves del diccionario sobre el archivo comprimido.
 
 ### Uso
 1. Generar el diccionario, pudiendo indicar además de las cadenas iniciales, la longitud máxima de combinación y el destino del archivo.
@@ -34,7 +34,7 @@ Clave: gato85gomez
 ### Algoritmo de generación
 Producto cartesiano de vector de caracteres, iniciando con las palabras base, se trata de todas las posibles combinaciones de un juego de palabreas con repetición.
 
-![Alt text](./Diagramas/algoritmo.png)
+![Alt text](./diagramas/algoritmo.png)
 
 ### Dependencias
 - itertools
