@@ -34,7 +34,7 @@ Clave: gato85gomez
 ### Algoritmo de generación
 Producto cartesiano de vector de caracteres, iniciando con las palabras base, se trata de todas las posibles combinaciones de un juego de palabreas con repetición.
 
-![Alt text](./diagramas/algoritmo.png)
+![Alt text](./diagramas/producto.png)
 
 ### Dependencias
 - itertools
