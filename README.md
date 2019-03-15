@@ -9,8 +9,9 @@ Existen dos fases de generación, la creación del diccionario a partir de lista
 1. Generar el diccionario, pudiendo indicar además de las cadenas iniciales, la longitud máxima de combinación y el destino del archivo.
 
 ```shell
-$ python3 diccionario/diccionario.py -p datos.txt
+$ python3 diccionario/diccionario.py 1 5 -p datos.txt
 Datos cargados del fichero: ./datos.txt
+Número de combinaciones: 579194
 
 Longitud 1 |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% Completado
 Longitud 2 |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% Completado
@@ -36,12 +37,26 @@ Clave: gato85gomez
 Este se usa como los datos iniciales para generar el diccionario, se trata de un archivo de texto en el cual cada línea contiene una única palabra sin espacios. Ilustramos con el siguiente ejemplo.
 
 ```txt
-lupo
 pedro
-72041985
-pepe
-mecano
-ronaldo
+garcia
+rubio
+```
+### Salida del diccionario
+```txt
+...
+igap
+igae
+igad
+igar
+igao
+igag
+igaa
+igac
+igai
+igau
+igab
+igcp
+...
 ```
 
 ### Ayuda
@@ -50,14 +65,16 @@ ronaldo
 
 ```shell
 $ python3 fuerzaBruta/fuerzaBruta.py -h
-usage: diccionario.py [-h] -p PALABRAS [-l LONGITUD] [-d DESTINO]
+usage: diccionario.py [-h] min max -p PALABRAS [-d DESTINO]
+
+positional arguments:
+  min                   Longitud mínima de combinaciones
+  max                   Longitud máxima de combinaciones
 
 optional arguments:
   -h, --help            show this help message and exit
   -p PALABRAS, --palabras PALABRAS
                         Lista de cadenas de entrada
-  -l LONGITUD, --longitud LONGITUD
-                        Longitud máxima de las combinaciones
   -d DESTINO, --destino DESTINO
                         Directorio del diccionario generado
 ```
@@ -78,7 +95,7 @@ optional arguments:
 ```
 
 ### Algoritmo de generación
-Producto cartesiano de vector de caracteres, iniciando con las palabras base, se trata de todas las posibles combinaciones de un juego de palabreas con repetición.
+Producto cartesiano de vector de caracteres, iniciando con las palabras base; se trata de todas las posibles combinaciones de un juego de caracteres con repetición.
 
 ![Alt text](./diagramas/producto.png)
 

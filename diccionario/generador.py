@@ -6,27 +6,43 @@ from barraProgreso import BarraProgreso
 class Generador(object):
 
 	def __init__(self, nombreArchivo):
-		self.__datos = self.__cargarArchivo(nombreArchivo)
+		self.__datos = self.__eliminarRepetidos(self.__cargarArchivo(nombreArchivo))
 		self.__L = len(self.__datos)
 		self.__progreso = BarraProgreso()
 
 	def __cargarArchivo(self, nombreArchivo):
 		
-		datos = []
+		datos = ""
 		archivo = open(nombreArchivo, "r")
 
-		for palabra in archivo: 
-			datos.append(palabra.replace("\n",""))
+		for palabra in archivo:
+			datos += palabra.replace("\n","")
 
 		archivo.close()
 		return datos
 
-	def generarDiccionario(self, longitudMaximaClave, nombreArchivo):
+	def __eliminarRepetidos(self, cadena):
+
+		cadenaSinRep = ""
+		for caracter in cadena:
+			if caracter not in cadenaSinRep:
+				cadenaSinRep += caracter
+
+		return cadenaSinRep
+
+	def calcularNumeroCombinaciones(self, min, max):
+		combinaciones = 0
+		for long in range(min, max+1):
+			combinaciones += self.__L ** long
+
+		return combinaciones
+
+	def generarDiccionario(self, longitudMinima, longitudMaxima, nombreArchivo):
 
 		inicio = time()
 		diccionario = open(nombreArchivo, "w")
 
-		for longitudClave in range(1, longitudMaximaClave+1):
+		for longitudClave in range(longitudMinima, longitudMaxima+1):
 
 			tamaño = self.__L**longitudClave
 			n = 1
