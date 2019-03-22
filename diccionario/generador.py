@@ -1,14 +1,13 @@
 
 from itertools import product
+from multiprocessing import Pool
 from time import time
-from barraProgreso import BarraProgreso
 
 class Generador(object):
 
 	def __init__(self, nombreArchivo):
 		self.__datos = self.__eliminarRepetidos(self.__cargarArchivo(nombreArchivo))
 		self.__L = len(self.__datos)
-		self.__progreso = BarraProgreso()
 
 	def __cargarArchivo(self, nombreArchivo):
 		
@@ -16,7 +15,7 @@ class Generador(object):
 		archivo = open(nombreArchivo, "r")
 
 		for palabra in archivo:
-			datos += palabra.replace("\n","")
+			datos += palabra.replace("\n", "")
 
 		archivo.close()
 		return datos
@@ -37,27 +36,42 @@ class Generador(object):
 
 		return combinaciones
 
+	def __calcularCombinaciones(self, particion, repeticiones, archivo):
+		# como argumento en la función product, pasamos n repeticiones-1 los datos
+		for combinacion in product(particion, *((self.__datos,)*(repeticiones-1))):
+			archivo.write("".join(combinacion)+ "\n")
+
 	def generarDiccionario(self, longitudMinima, longitudMaxima, nombreArchivo):
 
-		inicio = time()
-		diccionario = open(nombreArchivo, "w")
+		try:
+			inicio = time()
+			poolHilos = Pool()
+			diccionario = open(nombreArchivo, "w")
 
-		for longitudClave in range(longitudMinima, longitudMaxima+1):
+			numeroParticiones = 5
+			longitudParticion = self.__L // numeroParticiones
 
-			tamaño = self.__L**longitudClave
-			n = 1
-			for combinacion in product(self.__datos, repeat=longitudClave):
-				
-				diccionario.write("".join(combinacion) + "\n")
+			for longitudClave in range(longitudMinima, longitudMaxima+1):
 
-				self.__progreso.printProgressBar(
-					n,
-					tamaño,
-					prefix = "Longitud "+ str(longitudClave)
-				)
+				for numeroParticion in range(numeroParticiones):
+
+					if numeroParticion == numeroParticiones - 1:
+						particionDatos = self.__datos[longitudParticion*numeroParticion:]
+					else:
+						particionDatos = self.__datos[longitudParticion*numeroParticion:longitudParticion*(numeroParticion+1)]
+
+					poolHilos.apply_async(self.__calcularCombinaciones(particionDatos, longitudClave, diccionario))
+
+				print("Generada claves de longitud (" + str(longitudClave) + ")")
+
+			poolHilos.close()
+			poolHilos.join()
 			
-				n += 1
-		
-		diccionario.close()
-		fin = time()
-		print("\nTiempo transcurrido:", str(round(fin-inicio, 5))+"s")
+			diccionario.close()
+			fin = time()
+			print("\nTiempo transcurrido:", str(round(fin-inicio, 5))+"s")
+
+		except KeyboardInterrupt:
+			poolHilos.close()
+			poolHilos.join()
+			diccionario.close()
