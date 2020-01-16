@@ -64,7 +64,7 @@ igcp
 1. diccionario.py
 
 ```shell
-$ python3 fuerzaBruta/fuerzaBruta.py -h
+$ python3 diccionario/diccionario.py -h
 usage: diccionario.py [-h] min max -p PALABRAS [-d DESTINO]
 
 positional arguments:
